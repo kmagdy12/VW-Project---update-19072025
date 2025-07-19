@@ -28,11 +28,14 @@ import { UserSearch } from 'lucide-react';
 interface MainPlatformProps {
   profileCompleted: boolean;
   onReturnToOnboarding: () => void;
+  initialPage?: string;
 }
 
-const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnToOnboarding }) => {
+const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnToOnboarding, initialPage }) => {
   const [activeTab, setActiveTab] = useState('social');
-  const [mainContentMode, setMainContentMode] = useState<'tabs' | 'profileView' | 'myVentures' | 'ventureBuilder'>('tabs');
+  const [mainContentMode, setMainContentMode] = useState<'tabs' | 'profileView' | 'myVentures' | 'ventureBuilder' | 'welcome'>(
+    initialPage === 'welcome' ? 'welcome' : 'tabs'
+  );
   const [hasVenturesInPipeline, setHasVenturesInPipeline] = useState(false);
   const [activeSocialSection, setActiveSocialSection] = useState('feed');
   const [activeExpertsMarketplaceSection, setActiveExpertsMarketplaceSection] = useState('discover-experts');
@@ -553,6 +556,13 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
 
   const renderMainContent = () => {
     switch (mainContentMode) {
+      case 'welcome':
+        return (
+          <WelcomeScreen 
+            profileCompleted={profileCompleted}
+            onEnterPlatform={() => setMainContentMode('tabs')}
+          />
+        );
       case 'profileView':
         return <ProfileView onBack={() => setMainContentMode('tabs')} profileData={mockProfileData} />;
       case 'myVentures':
@@ -913,7 +923,7 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
                         setMainContentMode('profileView');
                         setShowProfileDropdown(false);
                       }}
-                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
+                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors"
                     >
                       View/Edit Profile
                     </button>
@@ -922,7 +932,7 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
                         setMainContentMode('myVentures');
                         setShowProfileDropdown(false);
                       }}
-                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
+                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors"
                     >
                       My Ventures
                     </button>
@@ -931,6 +941,7 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
                       onClick={() => {
                         setActiveTab('trading'); 
                         setActiveTradingSection('investment-pipeline'); 
+                        setMainContentMode('tabs');
                         setShowProfileDropdown(false);
                       }}
                     >
@@ -941,6 +952,7 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
                       onClick={() => {
                         setActiveTab('my-services');
                         setActiveMyServicesSection('overview');
+                        setMainContentMode('tabs');
                         setShowProfileDropdown(false);
                       }}
                      >

@@ -54,20 +54,12 @@ function App() {
     setCurrentPage('platform');
   };
 
-  if (isAuthenticated && currentPage === 'platform') {
+  if (isAuthenticated && (currentPage === 'platform' || currentPage === 'welcome')) {
     return (
       <MainPlatform 
         profileCompleted={profileCompleted} 
         onReturnToOnboarding={() => setCurrentPage('onboarding')}
-      />
-    );
-  }
-
-  if (isAuthenticated && currentPage === 'welcome') {
-    return (
-      <WelcomeScreen 
-        profileCompleted={profileCompleted}
-        onEnterPlatform={handleEnterPlatform}
+        initialPage={currentPage}
       />
     );
   }
