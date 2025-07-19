@@ -17,3 +17,4 @@
                <p className="text-gray-300">Manage and track your venture portfolio</p>
              </div>
            </div>
+   )

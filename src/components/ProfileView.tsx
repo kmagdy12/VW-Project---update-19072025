@@ -17,3 +17,4 @@
                <p className="text-gray-300">View and manage your profile information</p>
              </div>
            </div>
+   )
