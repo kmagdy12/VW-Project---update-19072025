@@ -661,8 +661,8 @@ const MyVentures: React.FC<MyVenturesProps> = ({ onBack, onCreateNewVenture }) =
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-linkedin-background via-linkedin-dark to-linkedin-background">
-      {/* Header */}
-      <div className="px-6 py-4 border-b border-linkedin-border">
+      {/* Section Header */}
+      <div className="px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button 
@@ -671,8 +671,10 @@ const MyVentures: React.FC<MyVenturesProps> = ({ onBack, onCreateNewVenture }) =
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <h1 className="text-2xl font-bold text-white">My Ventures</h1>
-            <p className="text-gray-300">Manage and track your venture portfolio</p>
+            <div>
+              <h1 className="text-2xl font-bold text-white">My Ventures</h1>
+              <p className="text-gray-300">Manage and track your venture portfolio</p>
+            </div>
           </div>
           <button 
             onClick={onCreateNewVenture}
