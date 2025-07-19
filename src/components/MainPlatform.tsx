@@ -720,287 +720,293 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="px-6 py-4 border-b border-linkedin-border bg-linkedin-background relative z-[50]">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-linkedin to-linkedin-light rounded-lg flex items-center justify-center">
-              <Building2 className="w-5 h-5 text-white" />
+      {/* Header - Only show when not in welcome mode */}
+      {mainContentMode !== 'welcome' && (
+        <header className="px-6 py-4 border-b border-linkedin-border bg-linkedin-background relative z-[50]">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-linkedin to-linkedin-light rounded-lg flex items-center justify-center">
+                <Building2 className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-white">Venture Weavers</span>
             </div>
-            <span className="text-xl font-bold text-white">Venture Weavers</span>
-          </div>
-          
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navigationItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setActiveTab(item.id);
-                  // Set default section for trading tab
-                  if (item.id === 'trading') {
-                    setActiveTradingSection('trading-dashboard');
-                  }
-                }}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
-                  activeTab === item.id
-                    ? 'bg-linkedin text-white'
-                    : 'text-gray-300 hover:text-white hover:bg-linkedin-card'
-                }`}
-              >
-                <item.icon className="w-5 h-5" />
-                <span className="whitespace-nowrap">{item.label}</span>
-              </button>
-            ))}
-          </nav>
-          
-          <div className="flex items-center space-x-6">
-            {/* Network Icon */}
-            <button 
-              onClick={() => {
-                setActiveTab('social');
-                setActiveSocialSection('network');
-              }}
-              className="p-2 text-gray-400 hover:text-white transition-colors"
-              title="Network Discovery"
-            >
-              <UserSearch className="w-5 h-5" />
-            </button>
             
-            {/* Messaging Icon */}
-            <button 
-              onClick={() => {
-                setActiveTab('social');
-                setActiveSocialSection('messaging');
-              }}
-              className="p-2 text-gray-400 hover:text-white transition-colors"
-              title="Messaging"
-            >
-              <MessageSquare className="w-5 h-5" />
-            </button>
+            {/* Navigation */}
+            <nav className="hidden md:flex items-center space-x-1">
+              {navigationItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    // Set default section for trading tab
+                    if (item.id === 'trading') {
+                      setActiveTradingSection('trading-dashboard');
+                    }
+                  }}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
+                    activeTab === item.id
+                      ? 'bg-linkedin text-white'
+                      : 'text-gray-300 hover:text-white hover:bg-linkedin-card'
+                  }`}
+                >
+                  <item.icon className="w-5 h-5" />
+                  <span className="whitespace-nowrap">{item.label}</span>
+                </button>
+              ))}
+            </nav>
             
-            {/* Notifications */}
-            <div className="relative" ref={notificationRef}>
+            <div className="flex items-center space-x-6">
+              {/* Network Icon */}
               <button 
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 text-gray-400 hover:text-white transition-colors relative"
+                onClick={() => {
+                  setActiveTab('social');
+                  setActiveSocialSection('network');
+                }}
+                className="p-2 text-gray-400 hover:text-white transition-colors"
+                title="Network Discovery"
               >
-                <Bell className="w-5 h-5" />
-                {notifications.filter(n => n.unread).length > 0 && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">{notifications.filter(n => n.unread).length}</span>
-                  </div>
-                )}
+                <UserSearch className="w-5 h-5" />
               </button>
               
-              {/* Notifications Dropdown */}
-              {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 bg-linkedin-card rounded-lg shadow-lg border border-linkedin-border z-[9999] max-h-96 overflow-y-auto">
-                  <div className="p-4 border-b border-linkedin-border">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-white font-semibold">Notifications</h3>
-                      <button className="text-linkedin-light hover:text-linkedin text-sm">
-                        Mark all as read
+              {/* Messaging Icon */}
+              <button 
+                onClick={() => {
+                  setActiveTab('social');
+                  setActiveSocialSection('messaging');
+                }}
+                className="p-2 text-gray-400 hover:text-white transition-colors"
+                title="Messaging"
+              >
+                <MessageSquare className="w-5 h-5" />
+              </button>
+              
+              {/* Notifications */}
+              <div className="relative" ref={notificationRef}>
+                <button 
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="p-2 text-gray-400 hover:text-white transition-colors relative"
+                >
+                  <Bell className="w-5 h-5" />
+                  {notifications.filter(n => n.unread).length > 0 && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">{notifications.filter(n => n.unread).length}</span>
+                    </div>
+                  )}
+                </button>
+                
+                {/* Notifications Dropdown */}
+                {showNotifications && (
+                  <div className="absolute right-0 mt-2 w-80 bg-linkedin-card rounded-lg shadow-lg border border-linkedin-border z-[9999] max-h-96 overflow-y-auto">
+                    <div className="p-4 border-b border-linkedin-border">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-white font-semibold">Notifications</h3>
+                        <button className="text-linkedin-light hover:text-linkedin text-sm">
+                          Mark all as read
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <div className="py-2">
+                      {notifications.map((notification) => (
+                        <div
+                          key={notification.id}
+                          className={`p-4 hover:bg-linkedin-background/50 transition-colors cursor-pointer border-l-4 ${
+                            notification.unread ? 'border-linkedin bg-linkedin/5' : 'border-transparent'
+                          }`}
+                        >
+                          <div className="flex items-start space-x-3">
+                            <div className="flex-shrink-0">
+                              {notification.avatar ? (
+                                <img 
+                                  src={notification.avatar} 
+                                  alt=""
+                                  className="w-8 h-8 rounded-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-8 h-8 bg-linkedin-card rounded-full flex items-center justify-center">
+                                  {getNotificationIcon(notification.type)}
+                                </div>
+                              )}
+                            </div>
+                            
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between">
+                                <p className={`text-sm font-medium ${notification.unread ? 'text-white' : 'text-gray-300'}`}>
+                                  {notification.title}
+                                </p>
+                                {notification.unread && (
+                                  <div className="w-2 h-2 bg-linkedin rounded-full"></div>
+                                )}
+                              </div>
+                              <p className="text-gray-400 text-sm mt-1">{notification.message}</p>
+                              <p className="text-gray-500 text-xs mt-1">{notification.time}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="p-3 border-t border-linkedin-border text-center">
+                      <button className="text-linkedin-light hover:text-linkedin text-sm font-medium">
+                        View All Notifications
                       </button>
                     </div>
                   </div>
-                  
-                  <div className="py-2">
-                    {notifications.map((notification) => (
-                      <div
-                        key={notification.id}
-                        className={`p-4 hover:bg-linkedin-background/50 transition-colors cursor-pointer border-l-4 ${
-                          notification.unread ? 'border-linkedin bg-linkedin/5' : 'border-transparent'
-                        }`}
-                      >
-                        <div className="flex items-start space-x-3">
-                          <div className="flex-shrink-0">
-                            {notification.avatar ? (
-                              <img 
-                                src={notification.avatar} 
-                                alt=""
-                                className="w-8 h-8 rounded-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-8 h-8 bg-linkedin-card rounded-full flex items-center justify-center">
-                                {getNotificationIcon(notification.type)}
-                              </div>
-                            )}
-                          </div>
-                          
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between">
-                              <p className={`text-sm font-medium ${notification.unread ? 'text-white' : 'text-gray-300'}`}>
-                                {notification.title}
-                              </p>
-                              {notification.unread && (
-                                <div className="w-2 h-2 bg-linkedin rounded-full"></div>
-                              )}
-                            </div>
-                            <p className="text-gray-400 text-sm mt-1">{notification.message}</p>
-                            <p className="text-gray-500 text-xs mt-1">{notification.time}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="p-3 border-t border-linkedin-border text-center">
-                    <button className="text-linkedin-light hover:text-linkedin text-sm font-medium">
-                      View All Notifications
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            {/* Profile Dropdown */}
-            <div className="relative z-[50]" ref={dropdownRef}>
-              <div 
-                className="flex items-center space-x-2 cursor-pointer"
-                onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              >
-                <img 
-                  src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=100" 
-                  alt="Profile" 
-                  className="w-10 h-10 rounded-full object-cover border-2 border-linkedin"
-                />
-                <div className="hidden md:block">
-                  <p className="text-white font-medium text-sm">John Doe</p>
-                  <p className="text-gray-400 text-xs">Entrepreneur & Investor</p>
-                </div>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
+                )}
               </div>
               
-              {showProfileDropdown && (
-                <div className="fixed right-0 mt-2 w-64 bg-linkedin-card rounded-lg shadow-lg border border-linkedin-border z-[9999]" style={{top: '60px', right: '20px'}}>
-                  <div className="p-4 border-b border-linkedin-border">
-                    <div className="flex items-center space-x-3">
-                      <img 
-                        src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=100" 
-                        alt="Profile" 
-                        className="w-12 h-12 rounded-full object-cover border-2 border-linkedin"
-                      />
-                      <div>
-                        <p className="text-white font-semibold">John Doe</p>
-                        <p className="text-gray-400 text-sm">Entrepreneur & Investor</p>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-gray-300 text-sm">Profile Completion</span>
-                        <span className="text-linkedin-light text-sm">80%</span>
-                      </div>
-                      <div className="w-full bg-gray-700 rounded-full h-2">
-                        <div 
-                          className="bg-gradient-to-r from-linkedin to-linkedin-light h-2 rounded-full"
-                          style={{ width: '80%' }}
-                        ></div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-3 flex items-center space-x-2">
-                      <div className="bg-gradient-to-r from-linkedin to-linkedin-light px-2 py-1 rounded text-xs text-white">
-                        VentureHub Pro
-                      </div>
-                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                      {!profileCompleted && (
-                        <button
-                          onClick={() => {
-                            onReturnToOnboarding();
-                            setShowProfileDropdown(false);
-                          }}
-                          className="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 rounded text-xs font-medium transition-colors"
-                        >
-                          Complete Profile
-                        </button>
-                      )}
-                    </div>
+              {/* Profile Dropdown */}
+              <div className="relative z-[50]" ref={dropdownRef}>
+                <div 
+                  className="flex items-center space-x-2 cursor-pointer"
+                  onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                >
+                  <img 
+                    src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                    alt="Profile" 
+                    className="w-10 h-10 rounded-full object-cover border-2 border-linkedin"
+                  />
+                  <div className="hidden md:block">
+                    <p className="text-white font-medium text-sm">John Doe</p>
+                    <p className="text-gray-400 text-xs">Entrepreneur & Investor</p>
                   </div>
-                  
-                  <div className="py-2">
-                    <button 
-                      onClick={() => {
-                        setMainContentMode('profileView');
-                        setShowProfileDropdown(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors"
-                    >
-                      View/Edit Profile
-                    </button>
-                    <button 
-                      onClick={() => {
-                        setMainContentMode('myVentures');
-                        setShowProfileDropdown(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors"
-                    >
-                      My Ventures
-                    </button>
-                    <button 
-                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
-                      onClick={() => {
-                        setActiveTab('trading'); 
-                        setActiveTradingSection('investment-pipeline'); 
-                        setMainContentMode('tabs');
-                        setShowProfileDropdown(false);
-                      }}
-                    >
-                      My Investments
-                    </button>
-                    <button 
-                      className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
-                      onClick={() => {
-                        setActiveTab('my-services');
-                        setActiveMyServicesSection('overview');
-                        setMainContentMode('tabs');
-                        setShowProfileDropdown(false);
-                      }}
-                     >
-                       My Services
-                     </button>
-                    <button className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]">
-                      Account Settings
-                    </button>
-                    <button className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]">
-                      Privacy Controls
-                    </button>
-                  </div>
-                  
-                  <div className="p-3 border-t border-linkedin-border">
-                    <button 
-                      className="w-full bg-linkedin-background/50 hover:bg-linkedin-background text-white px-4 py-2 rounded-lg text-sm transition-colors relative z-[9999]"
-                      onClick={() => setShowProfileDropdown(false)}
-                    >
-                      Sign Out
-                    </button>
-                  </div>
+                  <ChevronDown className="w-4 h-4 text-gray-400" />
                 </div>
-              )}
+                
+                {showProfileDropdown && (
+                  <div className="fixed right-0 mt-2 w-64 bg-linkedin-card rounded-lg shadow-lg border border-linkedin-border z-[9999]" style={{top: '60px', right: '20px'}}>
+                    <div className="p-4 border-b border-linkedin-border">
+                      <div className="flex items-center space-x-3">
+                        <img 
+                          src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                          alt="Profile" 
+                          className="w-12 h-12 rounded-full object-cover border-2 border-linkedin"
+                        />
+                        <div>
+                          <p className="text-white font-semibold">John Doe</p>
+                          <p className="text-gray-400 text-sm">Entrepreneur & Investor</p>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-3">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-gray-300 text-sm">Profile Completion</span>
+                          <span className="text-linkedin-light text-sm">80%</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <div 
+                            className="bg-gradient-to-r from-linkedin to-linkedin-light h-2 rounded-full"
+                            style={{ width: '80%' }}
+                          ></div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-3 flex items-center space-x-2">
+                        <div className="bg-gradient-to-r from-linkedin to-linkedin-light px-2 py-1 rounded text-xs text-white">
+                          VentureHub Pro
+                        </div>
+                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                        {!profileCompleted && (
+                          <button
+                            onClick={() => {
+                              onReturnToOnboarding();
+                              setShowProfileDropdown(false);
+                            }}
+                            className="bg-orange-500 hover:bg-orange-600 text-white px-2 py-1 rounded text-xs font-medium transition-colors"
+                          >
+                            Complete Profile
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="py-2">
+                      <button 
+                        onClick={() => {
+                          setMainContentMode('profileView');
+                          setShowProfileDropdown(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors"
+                      >
+                        View/Edit Profile
+                      </button>
+                      <button 
+                        onClick={() => {
+                          setMainContentMode('myVentures');
+                          setShowProfileDropdown(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors"
+                      >
+                        My Ventures
+                      </button>
+                      <button 
+                        className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
+                        onClick={() => {
+                          setActiveTab('trading'); 
+                          setActiveTradingSection('investment-pipeline'); 
+                          setMainContentMode('tabs');
+                          setShowProfileDropdown(false);
+                        }}
+                      >
+                        My Investments
+                      </button>
+                      <button 
+                        className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
+                        onClick={() => {
+                          setActiveTab('my-services');
+                          setActiveMyServicesSection('overview');
+                          setMainContentMode('tabs');
+                          setShowProfileDropdown(false);
+                        }}
+                       >
+                         My Services
+                       </button>
+                      <button className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]">
+                        Account Settings
+                      </button>
+                      <button className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]">
+                        Privacy Controls
+                      </button>
+                    </div>
+                    
+                    <div className="p-3 border-t border-linkedin-border">
+                      <button 
+                        className="w-full bg-linkedin-background/50 hover:bg-linkedin-background text-white px-4 py-2 rounded-lg text-sm transition-colors relative z-[9999]"
+                        onClick={() => setShowProfileDropdown(false)}
+                      >
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Mobile Navigation */}
-      <div className="md:hidden border-b border-linkedin-border bg-linkedin-background/50 backdrop-blur-lg">
-        <div className="flex">
-          {navigationItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex-1 flex flex-col items-center space-y-1 py-3 transition-all ${
-                activeTab === item.id
-                  ? 'text-linkedin-light border-b-2 border-linkedin-light'
-                  : 'text-gray-400'
-              }`}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="text-xs">{item.label}</span>
-            </button>
-          ))}
+      {/* Mobile Navigation - Only show when not in welcome mode */}
+      {mainContentMode !== 'welcome' && (
+        <div className="md:hidden border-b border-linkedin-border bg-linkedin-background/50 backdrop-blur-lg">
+          <div className="flex">
+            {navigationItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`flex-1 flex flex-col items-center space-y-1 py-3 transition-all ${
+                  activeTab === item.id
+                    ? 'text-linkedin-light border-b-2 border-linkedin-light'
+                    : 'text-gray-400'
+                }`}
+              >
+                <item.icon className="w-5 h-5" />
+                <span className="text-xs">{item.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Main Content */}
       <main className="w-full">
