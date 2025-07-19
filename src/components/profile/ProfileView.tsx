@@ -169,7 +169,7 @@ const ProfileView: React.FC<ProfileViewProps> = ({ onBack, profileData }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-linkedin-background via-linkedin-dark to-linkedin-background">
       {/* Header */}
-      <header className="px-6 py-4 border-b border-linkedin-border">
+      <div className="px-6 py-4 border-b border-linkedin-border">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
@@ -187,7 +187,7 @@ const ProfileView: React.FC<ProfileViewProps> = ({ onBack, profileData }) => {
             Edit Profile
           </button>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

@@ -32,9 +32,7 @@ interface MainPlatformProps {
 
 const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnToOnboarding }) => {
   const [activeTab, setActiveTab] = useState('social');
-  const [showProfileView, setShowProfileView] = useState(false);
-  const [showMyVentures, setShowMyVentures] = useState(false);
-  const [showVentureBuilder, setShowVentureBuilder] = useState(false);
+  const [mainContentMode, setMainContentMode] = useState<'tabs' | 'profileView' | 'myVentures' | 'ventureBuilder'>('tabs');
   const [hasVenturesInPipeline, setHasVenturesInPipeline] = useState(false);
   const [activeSocialSection, setActiveSocialSection] = useState('feed');
   const [activeExpertsMarketplaceSection, setActiveExpertsMarketplaceSection] = useState('discover-experts');
@@ -691,23 +689,26 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
     </div>
   );
 
-  if (showProfileView) {
-    return <ProfileView onBack={() => setShowProfileView(false)} profileData={mockProfileData} />;
-  }
-  
-  if (showVentureBuilder) {
-    return <VentureBuilder onBack={() => setShowVentureBuilder(false)} />;
-  }
-  
-  if (showMyVentures) {
-    return <MyVentures 
-      onBack={() => setShowMyVentures(false)} 
-      onCreateNewVenture={() => {
-        setShowMyVentures(false);
-        setShowVentureBuilder(true);
-      }}
-    />;
-  }
+  const renderMainContent = () => {
+    switch (mainContentMode) {
+      case 'profileView':
+        return <ProfileView onBack={() => setMainContentMode('tabs')} profileData={mockProfileData} />;
+      case 'myVentures':
+        return <MyVentures 
+          onBack={() => setMainContentMode('tabs')} 
+          onCreateNewVenture={() => setMainContentMode('ventureBuilder')}
+        />;
+      case 'ventureBuilder':
+        return <VentureBuilder onBack={() => setMainContentMode('tabs')} />;
+      case 'tabs':
+      default:
+        return (
+          <main className="w-full">
+            {renderTabContent()}
+          </main>
+        );
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -913,7 +914,7 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
                   <div className="py-2">
                     <button 
                       onClick={() => {
-                        setShowProfileView(true);
+                        setMainContentMode('profileView');
                         setShowProfileDropdown(false);
                       }}
                       className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
@@ -922,7 +923,7 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
                     </button>
                     <button 
                       onClick={() => {
-                        setShowMyVentures(true);
+                        setMainContentMode('myVentures');
                         setShowProfileDropdown(false);
                       }}
                       className="w-full text-left px-4 py-2 text-gray-300 hover:bg-linkedin-background/50 hover:text-white transition-colors relative z-[9999]"
@@ -993,10 +994,7 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
       </div>
 
       {/* Main Content */}
-      <main className="w-full">
-        {/* Tab Content */}
-        {renderTabContent()}
-      </main>
+      {renderMainContent()}
     </div>
   );
 };
