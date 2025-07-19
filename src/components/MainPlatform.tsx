@@ -24,6 +24,7 @@ import { Search, Users, BarChart3, MessageSquare, Bell, Settings, Building2, Tre
 import { ChevronDown } from 'lucide-react';
 import MyServicesMain from './my_services/MyServicesMain';
 import { UserSearch } from 'lucide-react';
+import WelcomeScreen from './WelcomeScreen';
 
 interface MainPlatformProps {
   profileCompleted: boolean;
