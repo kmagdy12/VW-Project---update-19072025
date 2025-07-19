@@ -551,6 +551,23 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
     />
   );
 
+  const renderMainContent = () => {
+    switch (mainContentMode) {
+      case 'profileView':
+        return <ProfileView onBack={() => setMainContentMode('tabs')} profileData={mockProfileData} />;
+      case 'myVentures':
+        return <MyVentures 
+          onBack={() => setMainContentMode('tabs')} 
+          onCreateNewVenture={() => setMainContentMode('ventureBuilder')}
+        />;
+      case 'ventureBuilder':
+        return <VentureBuilder onBack={() => setMainContentMode('tabs')} />;
+      case 'tabs':
+      default:
+        return renderTabContent();
+    }
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'social':
@@ -688,27 +705,6 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
       </div>
     </div>
   );
-
-  const renderMainContent = () => {
-    switch (mainContentMode) {
-      case 'profileView':
-        return <ProfileView onBack={() => setMainContentMode('tabs')} profileData={mockProfileData} />;
-      case 'myVentures':
-        return <MyVentures 
-          onBack={() => setMainContentMode('tabs')} 
-          onCreateNewVenture={() => setMainContentMode('ventureBuilder')}
-        />;
-      case 'ventureBuilder':
-        return <VentureBuilder onBack={() => setMainContentMode('tabs')} />;
-      case 'tabs':
-      default:
-        return (
-          <main className="w-full">
-            {renderTabContent()}
-          </main>
-        );
-    }
-  };
 
   return (
     <div className="min-h-screen">
@@ -994,7 +990,9 @@ const MainPlatform: React.FC<MainPlatformProps> = ({ profileCompleted, onReturnT
       </div>
 
       {/* Main Content */}
-      {renderMainContent()}
+      <main className="w-full">
+        {renderMainContent()}
+      </main>
     </div>
   );
 };

@@ -17,8 +17,8 @@ const VentureBuilder: React.FC<VentureBuilderProps> = ({ onBack }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-linkedin-background via-linkedin-dark to-linkedin-background">
-      {/* Section Header */}
-      <div className="px-6 py-4">
+      {/* Page Header */}
+      <div className="px-6 py-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
@@ -28,14 +28,14 @@ const VentureBuilder: React.FC<VentureBuilderProps> = ({ onBack }) => {
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div>
-              <h1 className="text-2xl font-bold text-white">Venture Builder</h1>
+              <h1 className="text-3xl font-bold text-white">Venture Builder</h1>
               <p className="text-gray-300">Build your venture with AI guidance</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-6 pb-8">
         {!ventureType ? (
           <OrientationScreen onSelectVentureType={handleSelectVentureType} />
         ) : (
